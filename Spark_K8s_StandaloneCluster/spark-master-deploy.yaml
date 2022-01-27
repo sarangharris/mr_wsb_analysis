@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spark-master-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sparkMasterApp
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: sparkMasterApp
+    spec:
+      hostname: spark-master-host
+      nodeSelector:
+        kubernetes.io/hostname: kubemaster
+      containers:
+        - name: spark-master
+          image: 129.114.27.39:5000/my-spark:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 7077
+            - containerPort: 8080
+          env:
+            - name: SPARK_LOCAL_IP
+              value: "spark-master-host"
+            - name: SPARK_NO_DAEMONIZE
+              value: "1"    
+
+          
+            - name: SPARK_HOME  
+              value: "/spark-3.1.1-bin-hadoop3.2"
+
+          command: ["$(SPARK_HOME)/sbin/start-master.sh"]
+          args: ["--host", "spark-master-host"]  
+...

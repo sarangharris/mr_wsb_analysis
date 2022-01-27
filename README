@@ -1,0 +1,12 @@
+README
+January 2022
+
+Sarang Harris and Stephen Hunter Barbella
+
+Cloud Computing project: WallStreetBets Sentiment Analysis 
+
+Since all of the set up is automated, to run the code you need to confirm that the VMs are not up and then run “vagrant up”.  This step takes over fifteen minutes or so. 
+
+From this point, exec into the Spark driver k8 pod and run the MapReduce code (mr_wsb_analysis.py). Results from the sentiment analysis will be dumped into couchdb. These results are accessible through the couchdb portal (http://129.114.27.39:30001/_utils/#).
+
+The MapReduce code also generates a WordCloud png image. To view this, secure copy from Kubernetes pod to your local machine to view. 
